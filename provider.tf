@@ -1,18 +1,14 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "4.21.0"
-    }
-  }
- backend "s3" {
-    bucket = "assignmentterraform"
-    key    = "assignment/tfstate"
-    region = "us-east-1"
-  }
+provider "aws" {
+  shared_credentials_file = "~/.aws/credentials"
+  region                  = "${var.base["region"]}"
 }
 
-provider "aws" {
-  # Configuration options
-  region = "us-east-1"
+terraform {
+  backend "s3" {
+    bucket = "mybucket"
+    key    = "backend/state"
+    region = "us-east-1"
+    encrypt = true
+    shared_credentials_file = "~/.aws/credentials"
+  }
 }
