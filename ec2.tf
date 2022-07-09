@@ -13,13 +13,13 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"] # Canonical
+  owners = ["9657278709"]
 }
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  key_name      = "assigment-key-pair"
+  key_name      = "project-key-pair"
   vpc_security_group_ids = [aws_security_group.bastion-ssh.id]
   subnet_id = module.vpc.public_subnets[0]
  tags = {
@@ -47,13 +47,13 @@ data "aws_ami" "ubuntu3" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"] # Canonical
+  owners = ["9657278709"] 
 }
 
 resource "aws_instance" "jenkins" {
   ami           = data.aws_ami.ubuntu3.id
   instance_type = "t2.micro"
-  key_name      = "assigment-key-pair"
+  key_name      = "project-key-pair"
   vpc_security_group_ids = [aws_security_group.private-ssh.id, aws_security_group.public.id]
   subnet_id = module.vpc.private_subnets[0]
  tags = {
@@ -76,13 +76,13 @@ data "aws_ami" "ubuntu1" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"] # Canonical
+  owners = ["9657278709"] 
 }
 
 resource "aws_instance" "App" {
   ami           = data.aws_ami.ubuntu1.id
   instance_type = "t2.micro"
-  key_name      = "assigment-key-pair"
+  key_name      = "project-key-pair"
   vpc_security_group_ids = [aws_security_group.public.id, aws_security_group.private-ssh.id]
   subnet_id = module.vpc.private_subnets[1]
  tags = {
