@@ -7,10 +7,6 @@ terraform {
 }
 }
 
-provider "aws" {
-  region = "us-east-1"
-}
-
 resource "aws_s3_bucket" "project_terraform" {
   bucket = "terraform-state-files-98676"
 }
