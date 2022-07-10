@@ -13,7 +13,7 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = ["9657278709"]
+  owners = ["503514835809"]
 }
 
 resource "aws_instance" "web" {
@@ -47,7 +47,7 @@ data "aws_ami" "ubuntu3" {
     values = ["hvm"]
   }
 
-  owners = ["9657278709"] 
+  owners = ["503514835809"] 
 }
 
 resource "aws_instance" "jenkins" {
@@ -76,7 +76,7 @@ data "aws_ami" "ubuntu1" {
     values = ["hvm"]
   }
 
-  owners = ["9657278709"] 
+  owners = ["503514835809"] 
 }
 
 resource "aws_instance" "App" {
