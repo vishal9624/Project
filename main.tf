@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "project_terraform" {
   bucket = "terraform-state-files-98676"
 }
 
-resource "aws_s3_bucket_versioning" "terraformstate" {
+resource "aws_s3_bucket_versioning" "project_terraform" {
   bucket = aws_s3_bucket.project_terraform.id
 
   versioning_configuration {
