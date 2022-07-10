@@ -10,7 +10,7 @@ ingress {
     to_port = 22
     protocol = "tcp"
   }
-// Terraform removes the default rule
+
   egress {
    from_port = 0
    to_port = 0
@@ -19,7 +19,7 @@ ingress {
  }
 }
 
-# security group for private instances
+
 resource "aws_security_group" "private-ssh" {
 name = "Private-sg"
 vpc_id = module.vpc.vpc_id
@@ -31,7 +31,7 @@ from_port = 22
     to_port = 22
     protocol = "tcp"
   }
-// Terraform removes the default rule
+
   egress {
    from_port = 0
    to_port = 0
@@ -40,8 +40,7 @@ from_port = 22
  }
 }
 
-#security group for Public web
-//security.tf
+
 resource "aws_security_group" "public" {
 name = "web-sg"
 vpc_id = module.vpc.vpc_id
@@ -53,7 +52,7 @@ from_port = 80
     to_port = 80
     protocol = "tcp"
   }
-// Terraform removes the default rule
+
   egress {
    from_port = 0
    to_port = 0
