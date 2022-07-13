@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+    environment {
+        registry = "638318277465.dkr.ecr.us-east-1.amazonaws.com/project/node"
+    }
+
+    stages {
+        stage('Cloning Git') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/vishal9624/Project.git']]])
+            }
+        }
+
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry
+        }
+      }
+    }
+    stage('Pushing to ECR') {
+        steps{
+            script {
+                sh 'docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 638318277465.dkr.ecr.us-east-1.amazonaws.com/project/node'
+                sh 'docker push 638318277465.dkr.ecr.us-east-1.amazonaws.com/project/node'
+            }
+        }
+    }
+    stage('Docker Run') {
+     steps{
+         script {
+             sshagent(credentials : ['aws_ec2']){
+
+                sh 'ssh -o StrictHostKeyChecking=no -i project-upgrad.pem ubuntu@10.0.2.129'
+
+             }
+                //sh 'ssh -i /login/project-upgrad.pem ubuntu@10.0.2.132'
+                sh 'docker run -d -p 8081:8080 --rm --name node 638318277465.dkr.ecr.us-east-1.amazonaws.com/project/node'
+            }
+      }
+    }
+    }
+}
